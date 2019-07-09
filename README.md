@@ -4,6 +4,7 @@ Battleships game, made with PyGame
 # Requirements
 
 Python 3
+
 PyGame (pip3 install pygame)
 
 # Playing the game
