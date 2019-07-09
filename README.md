@@ -7,6 +7,9 @@ Python 3
 
 PyGame (pip3 install pygame)
 
+## Screenshot
+![screenshot](screenshot.png)
+
 # Playing the game
 
 To play, simply run the main.py file, and follow onscreen
