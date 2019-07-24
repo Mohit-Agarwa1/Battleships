@@ -2,9 +2,13 @@
 
 print('USERNOTICE: Ignore any SyntaxWarning')
 
+import os
 import pygame
 import pygame_textinput
 import random
+
+global WINDOW_SIZE
+WINDOW_SIZE = [1250,800]
 
 a = pygame.image.load('square.png')
 pygame.display.set_icon(a)
@@ -19,7 +23,7 @@ red = RED
 DIFF_LIST = []
 
 # CHANGE DIFFICULTY, from 0 to 8
-DIFF_SET = 5
+DIFF_SET = 6
 
 if DIFF_SET == -1:
     DIFF_LIST = [1]
@@ -91,7 +95,7 @@ for row in range(10):
     for column in range(10):
         bpgrid[row].append(0)
 
-WINDOW_SIZE = [1250, 800]
+
 screen = pygame.display.set_mode(WINDOW_SIZE)
 
 # Set title of screen
@@ -110,8 +114,11 @@ def button(msg, x, y, w, h, ic, ac, action=None, tyl=None):
 
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(screen, ac, (x, y, w, h))
-
+        
         if click[0] == 1 and action != None:
+            if action == quit:
+                os._exit(0)
+                quit()
             if tyl != None:
                 action(tyl)
             else:
@@ -208,6 +215,7 @@ def check_surround(x, y, ak, shipsused):
 
 
 def gen_bot():
+    global gridbot, list_curr
     gridbot = []
     for row in range(10):
 
@@ -280,11 +288,12 @@ def gen_bot():
     gridbot[r_i][r_i_h] = 1
     ak = gridbot
 
-    global gridbot, list_curr
+    
     page_two('')
 
 
 def page_two(msg):
+    global WINDOW_SIZE
     global usergrid
     global gridbot
     global upgrid
@@ -317,7 +326,7 @@ def page_two(msg):
 
     pygame.init()
 
-    WINDOW_SIZE = [1250, 800]
+    
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
     pygame.display.set_caption("Battleships by Mohit")
@@ -333,6 +342,8 @@ def page_two(msg):
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     done = True  # Flag that we are done so we exit this loop
+                    os._exit(0)
+                    quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # User clicks the mouse. Get the position
                     pos = pygame.mouse.get_pos()
@@ -387,23 +398,23 @@ def page_two(msg):
             largeText = pygame.font.SysFont("arial", 35)
             TextSurf, TextRect = text_objects("Your ships are on the right, red indicates a hit, blue a miss",
                                               largeText, white)
-            TextRect.center = (625, 600)
+            TextRect.center = (((625/1250)*WINDOW_SIZE[0]), ((600/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurf, TextRect)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects("The grid you attack is on the left, click a square to fire.",
                                                 largeTextB, white)
-            TextRectB.center = (625, 700)
+            TextRectB.center = (((625/1250)*WINDOW_SIZE[0]), ((700/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects("Red = HIT, Blue = MISS, White = NOTHING", largeTextB, white)
-            TextRectB.center = (625, 650)
+            TextRectB.center = (((625/1250)*WINDOW_SIZE[0]), ((650/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects(str(msg), largeTextB, white)
-            TextRectB.center = (625, 550)
+            TextRectB.center = (((625/1250)*WINDOW_SIZE[0]), ((550/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             # Go ahead and update the screen with what we've drawn.
@@ -414,6 +425,7 @@ def page_two(msg):
 
 
 def page_three(msg):
+    global WINDOW_SIZE
     global usergrid, gridbot, upgrid, bpgrid
     a = pygame.image.load('square.png')
     pygame.display.set_icon(a)
@@ -447,7 +459,7 @@ def page_three(msg):
 
     pygame.init()
 
-    WINDOW_SIZE = [1250, 800]
+    
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
     # Set title of screen
@@ -467,17 +479,19 @@ def page_three(msg):
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     done = True  # Flag that we are done so we exit this loop
+                    os._exit(0)
+                    quit()
             # Set the screen background
             screen.fill(black)
 
             # Limit to 60 frames per second
             clock.tick(60)
 
-            button("Exit", 625, 400, 100, 50, d_red, red, quit)
+            button("Exit", ((625/1250)*WINDOW_SIZE[0]), ((400/800)*WINDOW_SIZE[1]), 100, 50, d_red, red, quit)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects(str(msg), largeTextB, white)
-            TextRectB.center = (550, 425)
+            TextRectB.center = (((550/1250)*WINDOW_SIZE[0]), ((425/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             # Go ahead and update the screen with what we've drawn.
@@ -671,6 +685,7 @@ def check_surround_bot(x, y, ak, shipsused):
 
 
 def page_one(msg):
+    global WINDOW_SIZE
     global usergrid
     a = pygame.image.load('square.png')
     pygame.display.set_icon(a)
@@ -694,7 +709,7 @@ def page_one(msg):
 
     pygame.init()
 
-    WINDOW_SIZE = [1250, 800]
+    
     screen = pygame.display.set_mode(WINDOW_SIZE)
 
     # Set title of screen
@@ -714,6 +729,8 @@ def page_one(msg):
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     done = True  # Flag that we are done so we exit this loop
+                    os._exit(0)
+                    quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # User clicks the mouse. Get the position
                     pos = pygame.mouse.get_pos()
@@ -747,32 +764,32 @@ def page_one(msg):
             clock.tick(60)
             listitems = [0, grid]
             usergrid = grid
-            button("Submit", 550, 450, 100, 50, d_red, red, check_pg_one, listitems)
+            button("Submit", ((550/1250)*WINDOW_SIZE[0]), ((450/800)*WINDOW_SIZE[1]), 100, 50, d_red, red, check_pg_one, listitems)
 
             largeText = pygame.font.SysFont("arial", 35)
             TextSurf, TextRect = text_objects("Welcome, draw one of each ship above then hit 'submit'", largeText,
                                               white)
-            TextRect.center = (870, 400)
+            TextRect.center = (((870/1250)*WINDOW_SIZE[0]), ((400/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurf, TextRect)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects("Ships cannot be diagonal and cannot be positioned next to each other",
                                                 largeTextB, white)
-            TextRectB.center = (625, 700)
+            TextRectB.center = (((600/1250)*WINDOW_SIZE[0]), ((700/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects("Placment at edges can cause issues. Do not place 1 ship last.",
                                                 largeTextB, white)
-            TextRectB.center = (625, 725)
+            TextRectB.center = (((625/1250)*WINDOW_SIZE[0]), ((725/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
             largeTextB = pygame.font.SysFont("arial", 35)
             TextSurfB, TextRectB = text_objects(str(msg), largeTextB, white)
-            TextRectB.center = (625, 600)
+            TextRectB.center = (((625/1250)*WINDOW_SIZE[0]), ((600/800)*WINDOW_SIZE[1]))
             screen.blit(TextSurfB, TextRectB)
 
-            screen.blit(example_image, (650, 150))
+            screen.blit(example_image, (((650/1250)*WINDOW_SIZE[0]), ((150/800)*WINDOW_SIZE[1])))
 
             # Go ahead and update the screen with what we've drawn.
             pygame.display.flip()
@@ -780,5 +797,4 @@ def page_one(msg):
         except Exception as e:
             pass
 
-
-page_one('')
+page_one('Battleships by Mohit')
